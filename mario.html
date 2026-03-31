@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mario — Íconos de los Videojuegos</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    :root { --char-color: #ef4444; --char-color2: #f97316; }
+
+    /* HERO */
+    .char-hero {
+      min-height: 75vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+      padding: 7rem 2rem 0;
+      max-width: 1140px;
+      margin: 0 auto;
+      gap: 3rem;
+      position: relative;
+    }
+    @media(max-width:768px){ .char-hero { grid-template-columns:1fr; align-items:start; padding-top:5.5rem; } }
+
+    .char-hero-text { padding-bottom: 3rem; }
+    .char-hero-text .eyebrow {
+      font-size: 0.62rem; font-weight:700; letter-spacing:0.4em;
+      text-transform:uppercase; color: var(--char-color);
+      margin-bottom: 0.75rem;
+    }
+    .char-hero-text h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 10vw, 8rem);
+      letter-spacing: 0.03em; line-height: 0.9;
+      margin-bottom: 1rem;
+      animation: fadeup 0.9s ease both;
+    }
+    .char-hero-text .subtitle {
+      font-size: 0.82rem; font-weight:600; letter-spacing:0.12em;
+      text-transform:uppercase; color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .char-tags { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.8rem; }
+    .char-tag {
+      font-size: 0.62rem; font-weight:700; letter-spacing:0.1em;
+      text-transform:uppercase; padding: 0.25rem 0.7rem;
+      border: 1px solid var(--char-color);
+      color: var(--char-color);
+      background: rgba(0,0,0,0.3);
+    }
+    .char-hero-img {
+      align-self: end;
+      position: relative;
+    }
+    .char-hero-img img {
+      width: 100%;
+      max-height: 60vh;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    }
+    @media(max-width:768px){ .char-hero-img { max-height:300px; } }
+
+    /* GLOW bg */
+    body { background: radial-gradient(ellipse at 80% 10%, #ef44440a 0%, transparent 50%), var(--bg); }
+
+    /* FACTS ROW */
+    .facts-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+    .fact-box {
+      background: var(--card);
+      padding: 1.4rem 1.6rem;
+    }
+    .fact-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; letter-spacing:0.05em;
+      color: var(--char-color); line-height:1;
+    }
+    .fact-label { font-size:0.78rem; color:var(--muted); margin-top:0.25rem; line-height:1.4; }
+
+    /* BIO SECTION */
+    .bio-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+    @media(max-width:768px){ .bio-grid { grid-template-columns:1fr; } }
+    .bio-text p + p { margin-top: 1rem; }
+
+    .side-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--char-color);
+      padding: 1.5rem;
+      position: sticky; top: 80px;
+    }
+    .side-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem; letter-spacing:0.08em;
+      color: var(--char-color); margin-bottom: 1rem;
+    }
+    .side-row {
+      display:flex; justify-content:space-between;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .side-row:last-child { border-bottom: none; }
+    .side-row span:first-child { color: var(--muted); }
+    .side-row span:last-child { font-weight:600; text-align:right; }
+
+    /* NAV BETWEEN CHARS */
+    .char-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 2rem 0;
+    }
+    .char-nav a {
+      font-size: 0.72rem; font-weight:700; letter-spacing:0.15em;
+      text-transform:uppercase; color: var(--muted);
+      text-decoration:none; padding:0.6rem 1.2rem;
+      border: 1px solid var(--border);
+      transition: all 0.25s;
+    }
+    .char-nav a:hover { color: var(--char-color); border-color: var(--char-color); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">GAME ICONS</a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-es="Inicio" data-en="Home">Inicio</a></li>
+    <li><a href="index.html#personajes" data-es="Personajes" data-en="Characters">Personajes</a></li>
+    <li><a href="quiz.html" data-es="Evaluación" data-en="Quiz">Evaluación</a></li>
+  </ul>
+  <div class="nav-right"><button id="lang-btn">EN</button></div>
+</nav>
+
+<!-- HERO -->
+<div style="position:relative; overflow:hidden; border-bottom: 1px solid var(--border);">
+  <div class="char-hero">
+    <div class="char-hero-text">
+      <div class="eyebrow" data-es="Super Mario Bros. · Nintendo · Desde 1981" data-en="Super Mario Bros. · Nintendo · Since 1981">Super Mario Bros. · Nintendo · Desde 1981</div>
+      <h1>Mario</h1>
+      <div class="subtitle" data-es="Ícono de los Videojuegos" data-en="Video Game Icon">Ícono de los Videojuegos</div>
+      <div class="char-tags">
+        <span class="char-tag" data-es="PLATAFORMAS" data-en="PLATFORMER">PLATAFORMAS</span><span class="char-tag" data-es="NINTENDO" data-en="NINTENDO">NINTENDO</span><span class="char-tag" data-es="ÍCONO GLOBAL" data-en="GLOBAL ICON">ÍCONO GLOBAL</span><span class="char-tag" data-es="AVENTURA" data-en="ADVENTURE">AVENTURA</span>
+      </div>
+      <a href="index.html#personajes" class="btn" data-es="← VER TODOS" data-en="← SEE ALL">← VER TODOS</a>
+    </div>
+    <div class="char-hero-img">
+      <img src="mario.jpg" alt="Mario"/>
+    </div>
+  </div>
+</div>
+
+<!-- FACTS -->
+<div class="wrap" style="padding-top:3rem; padding-bottom:0;">
+  <div class="facts-row reveal">
+    <div class="fact-box"><div class="fact-num">+800M</div><div class="fact-label" data-es="copias vendidas en toda la franquicia" data-en="copies sold across the franchise">copias vendidas en toda la franquicia</div></div>
+<div class="fact-box"><div class="fact-num">+200</div><div class="fact-label" data-es="juegos protagonizados por Mario" data-en="games starring Mario">juegos protagonizados por Mario</div></div>
+<div class="fact-box"><div class="fact-num">1981</div><div class="fact-label" data-es="año de su primer aparición" data-en="year of first appearance">año de su primer aparición</div></div>
+<div class="fact-box"><div class="fact-num">1985</div><div class="fact-label" data-es="debut de Super Mario Bros." data-en="Super Mario Bros. debut">debut de Super Mario Bros.</div></div>
+
+  </div>
+</div>
+
+<div class="divider" style="margin-top:3rem;"></div>
+
+<!-- BIO -->
+<section class="wrap">
+  <div class="bio-grid">
+    <div class="bio-text reveal">
+      <div class="label" data-es="Biografía" data-en="Biography">Biografía</div>
+      <h2 class="section-title" data-es="Historia e impacto" data-en="History & impact">Historia e impacto</h2>
+      <div data-es="<p class="body-text">Mario es sin duda el personaje más reconocido en toda la historia de los videojuegos. Creado por el diseñador japonés Shigeru Miyamoto, apareció por primera vez en el arcade Donkey Kong en 1981 bajo el nombre de "Jumpman". En 1985, con el lanzamiento de Super Mario Bros. para la Nintendo Entertainment System (NES), el fontanero italiano se convirtió en el símbolo del resurgimiento de los videojuegos tras la gran crisis de 1983.</p>
+<p class="body-text">A lo largo de décadas, Mario ha protagonizado más de 200 títulos distintos, desde juegos de plataformas hasta carreras, deportes y aventuras en mundos abiertos. Su franquicia ha vendido más de 800 millones de copias en todo el mundo, convirtiéndolo en la saga más exitosa de la historia del entretenimiento interactivo.</p>
+<p class="body-text">Mario no solo salvó a Nintendo en momentos críticos, sino que redefinió lo que un videojuego podía ser: una experiencia accesible, divertida y llena de imaginación para todas las edades. Hoy es tan reconocible a nivel mundial como los personajes más icónicos del cine o la televisión.</p>" data-en="<p class="body-text">Mario is undoubtedly the most recognized character in the entire history of video games. Created by Japanese designer Shigeru Miyamoto, he first appeared in the Donkey Kong arcade in 1981 under the name "Jumpman". In 1985, with the release of Super Mario Bros. for the NES, the Italian plumber became the symbol of the video game industry's recovery after the great crash of 1983.</p>
+<p class="body-text">Over decades, Mario has starred in more than 200 different titles, from platformers to racing, sports, and open-world adventures. His franchise has sold over 800 million copies worldwide, making it the most successful saga in the history of interactive entertainment.</p>
+<p class="body-text">Mario not only saved Nintendo at critical moments but redefined what a video game could be: an accessible, fun, imaginative experience for all ages. Today he is as globally recognized as the most iconic characters in film or television.</p>">
+        <p class="body-text">Mario es sin duda el personaje más reconocido en toda la historia de los videojuegos. Creado por el diseñador japonés Shigeru Miyamoto, apareció por primera vez en el arcade Donkey Kong en 1981 bajo el nombre de "Jumpman". En 1985, con el lanzamiento de Super Mario Bros. para la Nintendo Entertainment System (NES), el fontanero italiano se convirtió en el símbolo del resurgimiento de los videojuegos tras la gran crisis de 1983.</p>
+<p class="body-text">A lo largo de décadas, Mario ha protagonizado más de 200 títulos distintos, desde juegos de plataformas hasta carreras, deportes y aventuras en mundos abiertos. Su franquicia ha vendido más de 800 millones de copias en todo el mundo, convirtiéndolo en la saga más exitosa de la historia del entretenimiento interactivo.</p>
+<p class="body-text">Mario no solo salvó a Nintendo en momentos críticos, sino que redefinió lo que un videojuego podía ser: una experiencia accesible, divertida y llena de imaginación para todas las edades. Hoy es tan reconocible a nivel mundial como los personajes más icónicos del cine o la televisión.</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="side-card">
+        <h3 data-es="Datos clave" data-en="Key facts">Datos clave</h3>
+        <div class="side-row"><span data-es="Nombre" data-en="Name">Nombre</span><span>Mario</span></div>
+        <div class="side-row"><span data-es="Juego original" data-en="Original game">Juego original</span><span>Super Mario Bros.</span></div>
+        <div class="side-row"><span data-es="Compañía" data-en="Company">Compañía</span><span>Nintendo</span></div>
+        <div class="side-row"><span data-es="Debut" data-en="Debut">Debut</span><span>1981</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV BETWEEN CHARS -->
+  <div class="char-nav">
+    <div></div>
+    <a href="quiz.html" data-es="IR A LA EVALUACIÓN →" data-en="GO TO QUIZ →">IR A LA EVALUACIÓN →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">GAME ICONS</div>
+  <ul class="footer-nav">
+    <li><a href="mario.html">Mario</a></li>
+    <li><a href="link.html">Link</a></li>
+    <li><a href="sonic.html">Sonic</a></li>
+    <li><a href="lara.html">Lara Croft</a></li>
+    <li><a href="master.html">Master Chief</a></li>
+    <li><a href="quiz.html" data-es="Evaluación" data-en="Quiz">Evaluación</a></li>
+  </ul>
+  <p data-es="Proyecto académico · Bogotá, Colombia · 2025" data-en="Academic project · Bogotá, Colombia · 2025">Proyecto académico · Bogotá, Colombia · 2025</p>
+</footer>
+
+<script src="lang.js"></script>
+<script>
+  const obs = new IntersectionObserver(e => e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}})  ,{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

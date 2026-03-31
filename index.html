@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Íconos de los Videojuegos</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 7rem 2rem 4rem;
+      position: relative;
+      background: radial-gradient(ellipse at 50% 70%, rgba(0,229,255,0.05) 0%, transparent 65%);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(0,229,255,0.28) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: 0.09;
+      animation: gridmove 30s linear infinite;
+    }
+    @keyframes gridmove { to { background-position: 48px 48px; } }
+    .hero-eyebrow {
+      font-size: 0.63rem; font-weight: 700;
+      letter-spacing: 0.45em; text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(0,229,255,0.35);
+      padding: 0.3rem 1.2rem; margin-bottom: 2rem;
+      animation: fadeup 0.8s ease both;
+    }
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 12vw, 9rem);
+      letter-spacing: 0.04em; line-height: 0.92;
+      margin-bottom: 1.5rem;
+      animation: fadeup 1s ease 0.15s both;
+    }
+    .hero h1 .line2 {
+      background: linear-gradient(120deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      display: block;
+    }
+    .hero-sub {
+      max-width: 560px; color: #6a7e96; font-size: 1.05rem;
+      margin-bottom: 3rem; animation: fadeup 1s ease 0.3s both;
+    }
+    @keyframes fadeup { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    @media(max-width:768px){ .intro-grid { grid-template-columns: 1fr; gap: 2rem; } }
+    .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .stat-box {
+      background: var(--card); border: 1px solid var(--border);
+      padding: 1.2rem 1.4rem; position: relative;
+    }
+    .stat-box::before {
+      content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+    }
+    .stat-num { font-family:'Bebas Neue',sans-serif; font-size:2rem; color:var(--accent); letter-spacing:0.05em; line-height:1; }
+    .stat-label { font-size:0.78rem; color:var(--muted); margin-top:0.25rem; line-height:1.4; }
+
+    .section-chars { background: var(--surface); }
+    .card-mario  .card-stripe { background: linear-gradient(90deg,#ef4444,#f97316); }
+    .card-link   .card-stripe { background: linear-gradient(90deg,#22c55e,#06b6d4); }
+    .card-sonic  .card-stripe { background: linear-gradient(90deg,#3b82f6,#06b6d4); }
+    .card-lara   .card-stripe { background: linear-gradient(90deg,#a78bfa,#ec4899); }
+    .card-master .card-stripe { background: linear-gradient(90deg,#f97316,#eab308); }
+    .card-mario  { --c:#ef4444; }
+    .card-link   { --c:#22c55e; }
+    .card-sonic  { --c:#3b82f6; }
+    .card-lara   { --c:#a78bfa; }
+    .card-master { --c:#f97316; }
+    .char-card:hover { border-color: var(--c); }
+    .char-card .card-arrow { color: var(--c); }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">GAME ICONS</a>
+  <ul class="nav-links">
+    <li><a href="#intro" data-es="Inicio" data-en="Home">Inicio</a></li>
+    <li><a href="#personajes" data-es="Personajes" data-en="Characters">Personajes</a></li>
+    <li><a href="quiz.html" data-es="Evaluación" data-en="Quiz">Evaluación</a></li>
+  </ul>
+  <div class="nav-right"><button id="lang-btn">EN</button></div>
+</nav>
+
+<header class="hero">
+  <div class="hero-eyebrow" data-es="BOGOTÁ · COLOMBIA · CULTURA GAMER" data-en="BOGOTÁ · COLOMBIA · GAMER CULTURE">BOGOTÁ · COLOMBIA · CULTURA GAMER</div>
+  <h1>
+    <span data-es="Íconos de los" data-en="Icons of">Íconos de los</span>
+    <span class="line2" data-es="Videojuegos" data-en="Video Games">Videojuegos</span>
+  </h1>
+  <p class="hero-sub" data-es="Un recorrido por los cinco personajes más legendarios de la historia del entretenimiento digital, explorado desde Bogotá." data-en="A journey through the five most legendary characters in the history of digital entertainment, explored from Bogotá.">
+    Un recorrido por los cinco personajes más legendarios de la historia del entretenimiento digital, explorado desde Bogotá.
+  </p>
+</header>
+
+<div class="divider"></div>
+
+<section id="intro" class="wrap">
+  <div class="intro-grid">
+    <div class="intro-text reveal">
+      <div class="label" data-es="Introducción" data-en="Introduction">Introducción</div>
+      <h2 class="section-title" data-es="¿De qué trata este proyecto?" data-en="What is this project about?">¿De qué trata este proyecto?</h2>
+      <p class="body-text" data-es="Los videojuegos han evolucionado hasta convertirse en una de las formas de entretenimiento más influyentes del mundo. A lo largo de décadas, han surgido personajes que se han convertido en verdaderos íconos de la cultura gamer, figuras que trascienden las pantallas y forman parte de la identidad de generaciones enteras." data-en="Video games have evolved into one of the most influential forms of entertainment in the world. Over decades, characters have emerged that have become true icons of gamer culture — figures that transcend screens and form part of the identity of entire generations.">
+        Los videojuegos han evolucionado hasta convertirse en una de las formas de entretenimiento más influyentes del mundo. A lo largo de décadas, han surgido personajes que se han convertido en verdaderos íconos de la cultura gamer, figuras que trascienden las pantallas y forman parte de la identidad de generaciones enteras.
+      </p>
+      <p class="body-text" style="margin-top:1rem;" data-es="Este proyecto nace en Bogotá, donde el acceso a tecnologías digitales y el consumo de videojuegos ha crecido significativamente. La ciudad se ha convertido en epicentro de la escena gamer colombiana: torneos, convenciones y comunidades digitales hacen de los videojuegos parte del día a día bogotano." data-en="This project is born in Bogotá, where access to digital technologies and video game consumption has grown significantly. The city has become the epicenter of the Colombian gamer scene: tournaments, conventions, and digital communities make video games part of daily life in Bogotá.">
+        Este proyecto nace en Bogotá, donde el acceso a tecnologías digitales y el consumo de videojuegos ha crecido significativamente. La ciudad se ha convertido en epicentro de la escena gamer colombiana: torneos, convenciones y comunidades digitales hacen de los videojuegos parte del día a día bogotano.
+      </p>
+      <p class="body-text" style="margin-top:1rem;" data-es="El objetivo es presentar una experiencia interactiva sobre cinco personajes que marcaron generaciones y definieron lo que hoy conocemos como la industria de los videojuegos." data-en="The goal is to present an interactive experience about five characters who defined generations and shaped what we know today as the video game industry.">
+        El objetivo es presentar una experiencia interactiva sobre cinco personajes que marcaron generaciones y definieron lo que hoy conocemos como la industria de los videojuegos.
+      </p>
+    </div>
+    <div class="stat-row reveal">
+      <div class="stat-box">
+        <div class="stat-num">+800M</div>
+        <div class="stat-label" data-es="copias vendidas por la franquicia Mario" data-en="copies sold by the Mario franchise">copias vendidas por la franquicia Mario</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5</div>
+        <div class="stat-label" data-es="íconos que definieron generaciones" data-en="icons that defined generations">íconos que definieron generaciones</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">40+</div>
+        <div class="stat-label" data-es="años de historia gamer" data-en="years of gaming history">años de historia gamer</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">BOG</div>
+        <div class="stat-label" data-es="epicentro gamer de Colombia" data-en="gaming epicenter of Colombia">epicentro gamer de Colombia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="personajes" class="section-chars">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:0.5rem;">
+      <div class="label" data-es="Los Personajes" data-en="The Characters">Los Personajes</div>
+      <h2 class="section-title" data-es="Elige un ícono para explorar" data-en="Choose an icon to explore">Elige un ícono para explorar</h2>
+      <p class="body-text" data-es="Cada personaje tiene su propia página con su historia, datos y más." data-en="Each character has their own page with their story, facts, and more.">Cada personaje tiene su propia página con su historia, datos y más.</p>
+    </div>
+    <div class="char-cards reveal">
+      <a href="mario.html" class="char-card card-mario">
+        <div class="card-img"><img src="mario.jpg" alt="Mario"/></div>
+        <div class="card-stripe"></div>
+        <div class="card-body">
+          <div class="card-name">Mario</div>
+          <div class="card-game">Super Mario Bros. · Nintendo</div>
+          <div class="card-arrow" data-es="Ver perfil" data-en="View profile">Ver perfil</div>
+        </div>
+      </a>
+      <a href="link.html" class="char-card card-link">
+        <div class="card-img"><img src="link.jpg" alt="Link"/></div>
+        <div class="card-stripe"></div>
+        <div class="card-body">
+          <div class="card-name">Link</div>
+          <div class="card-game">The Legend of Zelda · Nintendo</div>
+          <div class="card-arrow" data-es="Ver perfil" data-en="View profile">Ver perfil</div>
+        </div>
+      </a>
+      <a href="sonic.html" class="char-card card-sonic">
+        <div class="card-img"><img src="sonic.jpg" alt="Sonic"/></div>
+        <div class="card-stripe"></div>
+        <div class="card-body">
+          <div class="card-name">Sonic</div>
+          <div class="card-game">Sonic the Hedgehog · SEGA</div>
+          <div class="card-arrow" data-es="Ver perfil" data-en="View profile">Ver perfil</div>
+        </div>
+      </a>
+      <a href="lara.html" class="char-card card-lara">
+        <div class="card-img"><img src="lara.jpg" alt="Lara Croft"/></div>
+        <div class="card-stripe"></div>
+        <div class="card-body">
+          <div class="card-name">Lara Croft</div>
+          <div class="card-game">Tomb Raider · Eidos</div>
+          <div class="card-arrow" data-es="Ver perfil" data-en="View profile">Ver perfil</div>
+        </div>
+      </a>
+      <a href="master.html" class="char-card card-master">
+        <div class="card-img"><img src="master.png" alt="Master Chief"/></div>
+        <div class="card-stripe"></div>
+        <div class="card-body">
+          <div class="card-name">Master Chief</div>
+          <div class="card-game">Halo · Bungie / 343</div>
+          <div class="card-arrow" data-es="Ver perfil" data-en="View profile">Ver perfil</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="wrap-sm" style="text-align:center;">
+  <div class="reveal">
+    <div class="label" data-es="¿Cuánto sabes?" data-en="How much do you know?">¿Cuánto sabes?</div>
+    <h2 class="section-title" data-es="Pon a prueba tus conocimientos" data-en="Test your knowledge">Pon a prueba tus conocimientos</h2>
+    <p class="body-text" style="margin-bottom:2rem;" data-es="Después de explorar los personajes, responde la evaluación y descubre cuánto sabes." data-en="After exploring the characters, take the quiz and find out how much you know.">Después de explorar los personajes, responde la evaluación y descubre cuánto sabes.</p>
+    <a href="quiz.html" class="btn" data-es="IR A LA EVALUACIÓN" data-en="GO TO QUIZ">IR A LA EVALUACIÓN</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">GAME ICONS</div>
+  <ul class="footer-nav">
+    <li><a href="mario.html">Mario</a></li>
+    <li><a href="link.html">Link</a></li>
+    <li><a href="sonic.html">Sonic</a></li>
+    <li><a href="lara.html">Lara Croft</a></li>
+    <li><a href="master.html">Master Chief</a></li>
+    <li><a href="quiz.html" data-es="Evaluación" data-en="Quiz">Evaluación</a></li>
+  </ul>
+  <p data-es="Proyecto académico · Bogotá, Colombia · 2025" data-en="Academic project · Bogotá, Colombia · 2025">Proyecto académico · Bogotá, Colombia · 2025</p>
+</footer>
+
+<script src="lang.js"></script>
+<script>
+  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}}),{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
