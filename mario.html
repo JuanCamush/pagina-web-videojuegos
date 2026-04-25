@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mario — Íconos de los Videojuegos</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    :root { --char-color:#ef4444; --char-color2:#f97316; --char-glow:rgba(239,68,68,0.2); }
+    body { background: radial-gradient(ellipse at 75% 0%, rgba(239,68,68,0.08) 0%, transparent 55%), var(--bg); }
+
+    .char-hero {
+      min-height: 90vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+    @media(max-width:768px){ .char-hero { grid-template-columns:1fr; min-height:auto; } }
+
+    .char-hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 4rem 3rem 4rem 2.5rem;
+      position: relative; z-index: 2;
+    }
+    @media(max-width:768px){ .char-hero-left { padding: 2.5rem 1.5rem; order:2; } }
+
+    .char-hero-right {
+      position: relative; overflow: hidden;
+    }
+    .char-hero-right img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      display: block;
+      mask-image: linear-gradient(to left, black 50%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to left, black 50%, transparent 100%);
+    }
+    @media(max-width:768px){
+      .char-hero-right { height: 320px; order:1; }
+      .char-hero-right img { mask-image: linear-gradient(to bottom, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%); }
+    }
+    .char-hero-right::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 30%, rgba(239,68,68,0.15) 0%, transparent 60%);
+    }
+
+    .char-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.75rem; letter-spacing: 0.5em;
+      color: var(--char-color); opacity: 0.6;
+      margin-bottom: 0.75rem;
+    }
+    .char-name-display {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      letter-spacing: 0.04em; line-height: 0.88;
+      color: var(--text);
+      text-shadow: 0 0 40px var(--char-glow);
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.9s ease both;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .char-franchise {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 0.8rem; font-weight: 400;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1.5rem;
+    }
+    .char-tags-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom: 2rem; }
+    .ctag {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.28rem 0.75rem;
+      border: 1px solid var(--char-color);
+      color: var(--char-color);
+      background: rgba(239,68,68,0.08);
+      border-radius: 2px;
+    }
+    .char-tagline {
+      font-size: 1.05rem; font-weight: 300;
+      color: var(--text-mid); line-height: 1.7;
+      margin-bottom: 2rem; font-style: italic;
+      border-left: 2px solid var(--char-color);
+      padding-left: 1rem;
+    }
+    .hero-nav-btns { display:flex; gap:0.75rem; flex-wrap:wrap; }
+
+    /* FACTS BAR */
+    .facts-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative; z-index: 2;
+    }
+    @media(max-width:600px){ .facts-bar { grid-template-columns: 1fr 1fr; } }
+    .fact-cell {
+      padding: 1.6rem 1.5rem;
+      border-right: 1px solid var(--border);
+      background: var(--bg-card);
+      transition: background var(--transition);
+    }
+    .fact-cell:last-child { border-right: none; }
+    .fact-cell:hover { background: var(--bg-hover); }
+    .fact-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; letter-spacing: 0.06em;
+      color: var(--char-color);
+      text-shadow: 0 0 18px var(--char-glow);
+      line-height: 1;
+    }
+    .fact-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem; line-height: 1.4; }
+
+    /* BIO */
+    .bio-section { background: linear-gradient(180deg, var(--bg) 0%, var(--bg-mid) 50%, var(--bg) 100%); }
+    .bio-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 4rem; align-items: start;
+    }
+    @media(max-width:900px){ .bio-grid { grid-template-columns:1fr; gap:2.5rem; } }
+    .bio-body p + p { margin-top: 1.1rem; }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--char-color);
+      padding: 1.8rem;
+      border-radius: var(--radius);
+      position: sticky; top: calc(var(--nav-h) + 1rem);
+    }
+    .info-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem; letter-spacing: 0.1em;
+      color: var(--char-color); margin-bottom: 1.2rem;
+    }
+    .info-row {
+      display: flex; justify-content: space-between; align-items: start;
+      padding: 0.7rem 0; border-bottom: 1px solid var(--border);
+      gap: 1rem; font-size: 0.88rem;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-row .ik { color: var(--text-muted); font-weight: 400; flex-shrink: 0; }
+    .info-row .iv { color: var(--text); font-weight: 600; text-align: right; }
+
+    /* IMPACT */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem; margin-top: 2rem;
+    }
+    .impact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .impact-card:hover { border-color: var(--char-color); transform: translateY(-3px); }
+    .impact-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+    .impact-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem; letter-spacing: 0.08em;
+      color: var(--char-color); margin-bottom: 0.5rem;
+    }
+    .impact-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* CHAR NAV */
+    .char-nav-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 0; flex-wrap: wrap; gap: 1rem;
+    }
+    .char-nav-bar a {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-muted); padding: 0.55rem 1.2rem;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: all var(--transition);
+    }
+    .char-nav-bar a:hover { color: var(--char-color); border-color: var(--char-color); background: rgba(239,68,68,0.06); }
+  </style>
+</head>
+<body>
+<div id="ps-bg">
+  <div class="ps-wave"></div><div class="ps-wave"></div>
+  <div class="ps-wave"></div><div class="ps-wave"></div>
+</div>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<button id="back-top" aria-label="Volver arriba">↑</button>
+
+<div id="page-wrap">
+<nav>
+  <a class="nav-logo" href="index.html">GAME ICONS</a>
+  <ul class="nav-links">
+    <li><a href="index.html"          data-es="Inicio"     data-en="Home">Inicio</a></li>
+    <li><a href="index.html#personajes" data-es="Personajes" data-en="Characters">Personajes</a></li>
+    <li><a href="quiz.html"           data-es="Evaluación" data-en="Quiz">Evaluación</a></li>
+  </ul>
+  <div class="nav-symbols">
+    <div class="ps-sym ps-sym-x">✕</div><div class="ps-sym ps-sym-o">○</div>
+    <div class="ps-sym ps-sym-sq">□</div><div class="ps-sym ps-sym-tri">△</div>
+  </div>
+  <button id="lang-btn">EN</button>
+</nav>
+
+<!-- HERO -->
+<section class="char-hero">
+  <div class="char-hero-left">
+    <div class="char-number" data-es="PERSONAJE 01 / 05 — ÍCONO DEL GAMING" data-en="CHARACTER 01 / 05 — GAMING ICON">PERSONAJE 01 / 05 — ÍCONO DEL GAMING</div>
+    <h1 class="char-name-display">Mario</h1>
+    <div class="char-franchise" data-es="Super Mario Bros. · Nintendo · Desde 1981" data-en="Super Mario Bros. · Nintendo · Since 1981">Super Mario Bros. · Nintendo · Desde 1981</div>
+    <div class="char-tags-row"><span class="ctag" data-es="PLATAFORMAS" data-en="PLATFORMER">PLATAFORMAS</span><span class="ctag" data-es="NINTENDO" data-en="NINTENDO">NINTENDO</span><span class="ctag" data-es="ÍCONO GLOBAL" data-en="GLOBAL ICON">ÍCONO GLOBAL</span><span class="ctag" data-es="AVENTURA" data-en="ADVENTURE">AVENTURA</span><span class="ctag" data-es="1981" data-en="1981">1981</span></div>
+    <p class="char-tagline" data-es=""El fontanero que salvó a Nintendo y redefinió lo que un videojuego podía ser."" data-en=""The plumber who saved Nintendo and redefined what a video game could be."">"El fontanero que salvó a Nintendo y redefinió lo que un videojuego podía ser."</p>
+    <div class="hero-nav-btns">
+      <a href="index.html#personajes" class="btn btn-ghost" data-es="← Todos los personajes" data-en="← All characters">← Todos los personajes</a>
+      <a href="quiz.html" class="btn" data-es="Ir a la evaluación" data-en="Go to quiz">Ir a la evaluación</a>
+    </div>
+  </div>
+  <div class="char-hero-right">
+    <img src="mario.jpg" alt="Mario" loading="lazy"/>
+  </div>
+</section>
+
+<!-- FACTS -->
+<div class="facts-bar">
+  <div class="fact-cell"><div class="fact-num">+800M</div><div class="fact-label" data-es="copias vendidas en la franquicia" data-en="copies sold in the franchise">copias vendidas en la franquicia</div></div><div class="fact-cell"><div class="fact-num">+200</div><div class="fact-label" data-es="juegos protagonizados" data-en="games starring Mario">juegos protagonizados</div></div><div class="fact-cell"><div class="fact-num">1981</div><div class="fact-label" data-es="primera aparición como Jumpman" data-en="first appearance as Jumpman">primera aparición como Jumpman</div></div><div class="fact-cell"><div class="fact-num">#1</div><div class="fact-label" data-es="saga más vendida de la historia" data-en="best-selling saga in history">saga más vendida de la historia</div></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- BIO -->
+<section class="bio-section">
+<div class="wrap">
+  <div class="bio-grid">
+    <div class="bio-body reveal">
+      <span class="eyebrow" data-es="Biografía completa" data-en="Full biography">Biografía completa</span>
+      <h2 class="section-title" data-es="Historia e impacto" data-en="History & impact">Historia e impacto</h2>
+      <div data-es="<p class="body-text">Mario es sin duda el personaje más reconocido en toda la historia de los videojuegos. Creado por el genial diseñador japonés <strong>Shigeru Miyamoto</strong>, apareció por primera vez en el arcade <em>Donkey Kong</em> en 1981 bajo el nombre de "Jumpman". En aquel entonces, era simplemente un personaje genérico cuya misión era saltar obstáculos y rescatar a una damisela. Nadie imaginaba que ese pequeño fontanero de píxeles se convertiría en el ícono más grande de la cultura gamer mundial.</p>
+<p class="body-text">En 1985, con el lanzamiento de <strong>Super Mario Bros.</strong> para la Nintendo Entertainment System (NES), el fontanero italiano se convirtió en el símbolo del resurgimiento de los videojuegos tras la gran crisis de 1983. El juego vendió más de 40 millones de copias y demostró que los videojuegos domésticos podían ser una forma de entretenimiento seria, accesible y duradera.</p>
+<p class="body-text">A lo largo de más de cuatro décadas, Mario ha protagonizado <strong>más de 200 títulos distintos</strong>: desde juegos de plataformas clásicos hasta carreras en Mario Kart, deportes en Mario Tennis y Golf, aventuras de mundo abierto en Super Mario Odyssey, e incluso batallas en Super Smash Bros. Su franquicia ha vendido más de <strong>800 millones de copias</strong> en todo el mundo, convirtiéndola en la saga más exitosa de la historia del entretenimiento interactivo.</p>
+<p class="body-text">Mario no solo salvó a Nintendo en momentos críticos, sino que redefinió por completo lo que un videojuego podía ser: una experiencia accesible, divertida y llena de imaginación para personas de todas las edades. Su influencia se extiende al cine con la película de animación de 2023, y a miles de productos de merchandising que lo hacen tan presente en la cultura popular como cualquier superhéroe de cómic o estrella de Hollywood.</p>" data-en="<p class="body-text">Mario is undoubtedly the most recognized character in the entire history of video games. Created by the brilliant Japanese designer <strong>Shigeru Miyamoto</strong>, he first appeared in the <em>Donkey Kong</em> arcade in 1981 under the name "Jumpman". Back then, he was simply a generic character whose mission was to jump over obstacles and rescue a damsel. No one imagined that this small pixelated plumber would become the biggest icon in global gamer culture.</p>
+<p class="body-text">In 1985, with the release of <strong>Super Mario Bros.</strong> for the Nintendo Entertainment System (NES), the Italian plumber became the symbol of the video game industry's recovery after the great crash of 1983. The game sold over 40 million copies and proved that home video games could be a serious, accessible, and lasting form of entertainment.</p>
+<p class="body-text">Over more than four decades, Mario has starred in <strong>more than 200 different titles</strong>: from classic platformers to racing in Mario Kart, sports in Mario Tennis and Golf, open-world adventures in Super Mario Odyssey, and even battles in Super Smash Bros. His franchise has sold over <strong>800 million copies</strong> worldwide, making it the most successful saga in the history of interactive entertainment.</p>
+<p class="body-text">Mario not only saved Nintendo at critical moments but completely redefined what a video game could be: an accessible, fun, and imaginative experience for people of all ages. His influence extends to film with the 2023 animated movie, and to thousands of merchandise products that make him as present in popular culture as any comic book superhero or Hollywood star.</p>"><p class="body-text">Mario es sin duda el personaje más reconocido en toda la historia de los videojuegos. Creado por el genial diseñador japonés <strong>Shigeru Miyamoto</strong>, apareció por primera vez en el arcade <em>Donkey Kong</em> en 1981 bajo el nombre de "Jumpman". En aquel entonces, era simplemente un personaje genérico cuya misión era saltar obstáculos y rescatar a una damisela. Nadie imaginaba que ese pequeño fontanero de píxeles se convertiría en el ícono más grande de la cultura gamer mundial.</p>
+<p class="body-text">En 1985, con el lanzamiento de <strong>Super Mario Bros.</strong> para la Nintendo Entertainment System (NES), el fontanero italiano se convirtió en el símbolo del resurgimiento de los videojuegos tras la gran crisis de 1983. El juego vendió más de 40 millones de copias y demostró que los videojuegos domésticos podían ser una forma de entretenimiento seria, accesible y duradera.</p>
+<p class="body-text">A lo largo de más de cuatro décadas, Mario ha protagonizado <strong>más de 200 títulos distintos</strong>: desde juegos de plataformas clásicos hasta carreras en Mario Kart, deportes en Mario Tennis y Golf, aventuras de mundo abierto en Super Mario Odyssey, e incluso batallas en Super Smash Bros. Su franquicia ha vendido más de <strong>800 millones de copias</strong> en todo el mundo, convirtiéndola en la saga más exitosa de la historia del entretenimiento interactivo.</p>
+<p class="body-text">Mario no solo salvó a Nintendo en momentos críticos, sino que redefinió por completo lo que un videojuego podía ser: una experiencia accesible, divertida y llena de imaginación para personas de todas las edades. Su influencia se extiende al cine con la película de animación de 2023, y a miles de productos de merchandising que lo hacen tan presente en la cultura popular como cualquier superhéroe de cómic o estrella de Hollywood.</p></div>
+    </div>
+    <div class="reveal delay-2">
+      <div class="info-card">
+        <h3 data-es="Ficha del personaje" data-en="Character profile">Ficha del personaje</h3>
+        <div class="info-row"><span class="ik" data-es="Nombre completo" data-en="Full name">Nombre completo</span><span class="iv">Mario Mario</span></div><div class="info-row"><span class="ik" data-es="Debut" data-en="Debut">Debut</span><span class="iv">Donkey Kong (1981)</span></div><div class="info-row"><span class="ik" data-es="Compañía" data-en="Company">Compañía</span><span class="iv">Nintendo</span></div><div class="info-row"><span class="ik" data-es="Creador" data-en="Creator">Creador</span><span class="iv">Shigeru Miyamoto</span></div><div class="info-row"><span class="ik" data-es="Género" data-en="Genre">Género</span><span class="iv">Plataformas / Aventura</span></div><div class="info-row"><span class="ik" data-es="Juegos principales" data-en="Main games">Juegos principales</span><span class="iv">+200 títulos</span></div><div class="info-row"><span class="ik" data-es="Ventas" data-en="Sales">Ventas</span><span class="iv">+800 millones de copias</span></div><div class="info-row"><span class="ik" data-es="Película" data-en="Movie">Película</span><span class="iv">The Super Mario Bros. Movie (2023)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- IMPACT -->
+<section class="wrap">
+  <div class="reveal">
+    <span class="eyebrow" data-es="Legado e impacto" data-en="Legacy & impact">Legado e impacto</span>
+    <h2 class="section-title" data-es="¿Por qué es un ícono?" data-en="Why is it an icon?">¿Por qué es un ícono?</h2>
+  </div>
+  <div class="impact-grid"><div class="impact-card reveal">
+      <div class="impact-icon">🎮</div>
+      <div class="impact-title" data-es="Resurrección de la Industria" data-en="Industry Resurrection">Resurrección de la Industria</div>
+      <p class="impact-text" data-es="Salvó la industria de los videojuegos tras el colapso del mercado de 1983, demostrando la viabilidad de los juegos domésticos." data-en="Saved the video game industry after the market crash of 1983, proving the viability of home gaming.">Salvó la industria de los videojuegos tras el colapso del mercado de 1983, demostrando la viabilidad de los juegos domésticos.</p>
+    </div><div class="impact-card reveal">
+      <div class="impact-icon">🌍</div>
+      <div class="impact-title" data-es="Ícono Cultural Global" data-en="Global Cultural Icon">Ícono Cultural Global</div>
+      <p class="impact-text" data-es="Más reconocible que Mickey Mouse según estudios de 1990. Su imagen trasciende idiomas, culturas y generaciones." data-en="More recognizable than Mickey Mouse according to 1990s studies. His image transcends languages, cultures, and generations.">Más reconocible que Mickey Mouse según estudios de 1990. Su imagen trasciende idiomas, culturas y generaciones.</p>
+    </div><div class="impact-card reveal">
+      <div class="impact-icon">🎬</div>
+      <div class="impact-title" data-es="Impacto en el Entretenimiento" data-en="Entertainment Impact">Impacto en el Entretenimiento</div>
+      <p class="impact-text" data-es="Su película de 2023 recaudó más de 1.3 mil millones de dólares, convirtiéndose en la película de videojuego más taquillera de la historia." data-en="His 2023 film grossed over $1.3 billion, becoming the highest-grossing video game movie in history.">Su película de 2023 recaudó más de 1.3 mil millones de dólares, convirtiéndose en la película de videojuego más taquillera de la historia.</p>
+    </div><div class="impact-card reveal">
+      <div class="impact-icon">⭐</div>
+      <div class="impact-title" data-es="Definió el Género Plataformas" data-en="Defined the Platformer Genre">Definió el Género Plataformas</div>
+      <p class="impact-text" data-es="Super Mario Bros. estableció las bases del género de plataformas que luego inspiró miles de juegos y generaciones de desarrolladores." data-en="Super Mario Bros. established the foundations of the platformer genre, inspiring thousands of games and generations of developers.">Super Mario Bros. estableció las bases del género de plataformas que luego inspiró miles de juegos y generaciones de desarrolladores.</p>
+    </div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CHAR NAV -->
+<div class="wrap" style="padding-top:2rem; padding-bottom:2rem;">
+  <div class="char-nav-bar">
+    <a href="master.html" data-es="← Master Chief" data-en="← Master Chief">← Master Chief</a>
+    <a href="index.html#personajes" data-es="Ver todos" data-en="See all">Ver todos</a>
+    <a href="link.html" data-es="Link →" data-en="Link →">Link →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">GAME ICONS</div>
+      <p class="footer-desc" data-es="Una experiencia informativa sobre los íconos más legendarios de la historia de los videojuegos. Proyecto académico · Bogotá, Colombia." data-en="An informative experience about the most legendary icons in video game history. Academic project · Bogotá, Colombia.">Una experiencia informativa sobre los íconos más legendarios de la historia de los videojuegos. Proyecto académico · Bogotá, Colombia.</p>
+    </div>
+    <ul class="footer-nav">
+      <li><a href="index.html" data-es="Inicio" data-en="Home">Inicio</a></li>
+      <li><a href="mario.html">Mario</a></li><li><a href="link.html">Link</a></li>
+      <li><a href="sonic.html">Sonic</a></li><li><a href="lara.html">Lara Croft</a></li>
+      <li><a href="master.html">Master Chief</a></li>
+      <li><a href="quiz.html" data-es="Evaluación" data-en="Quiz">Evaluación</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span data-es="© 2025 · Proyecto Académico · Bogotá, Colombia" data-en="© 2025 · Academic Project · Bogotá, Colombia">© 2025 · Proyecto Académico · Bogotá, Colombia</span>
+    <span>HTML · CSS · JavaScript · GitHub Pages</span>
+  </div>
+</footer>
+</div>
+<script src="global.js"></script>
+<script>
+  document.querySelectorAll('.reveal').forEach((el,i)=>{
+    const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}}),{threshold:0.07});
+    obs.observe(el);
+  });
+</script>
+</body></html>

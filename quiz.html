@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Evaluación — Íconos de los Videojuegos</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .quiz-hero {
+      min-height: 45vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: calc(var(--nav-h) + 3rem) 2.5rem 3rem;
+      background: radial-gradient(ellipse at 50% 80%, rgba(0,85,204,0.12) 0%, transparent 60%);
+      position: relative;
+    }
+    .quiz-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(0,180,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,180,255,0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .quiz-hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      letter-spacing: 0.05em; line-height: 1;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #1a7fff, #00e5ff, #ffffff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .quiz-hero p { color: var(--text-mid); max-width: 520px; font-size: 1.05rem; font-weight: 300; }
+
+    /* PS symbols animated */
+    .ps-quiz-symbols {
+      display: flex; gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .psq { width: 38px; height: 38px; border-radius: 50%; border: 2px solid; display: flex; align-items: center; justify-content: center; font-weight: 700; animation: psqPulse 2.8s ease-in-out infinite; }
+    .psq-x  { border-color:#4a90d9; color:#4a90d9; animation-delay:0s; }
+    .psq-o  { border-color:#d94a4a; color:#d94a4a; animation-delay:0.35s; }
+    .psq-sq { border-color:#d94aae; color:#d94aae; animation-delay:0.7s; }
+    .psq-tr { border-color:#4ad994; color:#4ad994; animation-delay:1.05s; }
+    @keyframes psqPulse { 0%,100%{transform:scale(1);box-shadow:none} 50%{transform:scale(1.18);box-shadow:0 0 16px currentColor} }
+
+    /* progress */
+    .progress-wrap { max-width: 700px; margin: 0 auto 2rem; }
+    .progress-header { display:flex; justify-content:space-between; font-size:0.72rem; color:var(--text-muted); font-family:'Rajdhani',sans-serif; font-weight:600; letter-spacing:0.1em; margin-bottom:0.5rem; }
+    .progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height:100%; background: linear-gradient(90deg, var(--blue-3), var(--accent)); transition: width 0.5s cubic-bezier(0.4,0,0.2,1); border-radius: 2px; }
+
+    /* questions */
+    .quiz-wrap { max-width: 700px; margin: 0 auto; padding: 0 2rem 5rem; }
+    .quiz-q {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem 2rem;
+      margin-bottom: 1.2rem;
+      transition: border-color var(--transition);
+    }
+    .quiz-q.answered { border-color: var(--border-2); }
+    .q-head { display:flex; align-items:center; gap:0.85rem; margin-bottom: 1rem; }
+    .q-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(0,180,255,0.1); border: 1px solid var(--border-2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem;
+      color: var(--accent); flex-shrink: 0;
+    }
+    .q-char {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted);
+    }
+    .q-text {
+      font-family: 'Exo 2', sans-serif; font-size: 0.98rem; font-weight: 600;
+      color: var(--text); line-height: 1.5; margin-bottom: 1.1rem;
+    }
+    .opts { display:flex; flex-direction:column; gap:0.5rem; }
+    .opts label {
+      display: flex; align-items: center; gap: 0.85rem;
+      cursor: none; font-size: 0.9rem; font-weight: 400;
+      color: var(--text-mid);
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.01);
+      transition: border-color var(--transition), color var(--transition), background var(--transition);
+    }
+    .opts label:hover { border-color: var(--blue-4); color: var(--text); background: rgba(0,180,255,0.05); }
+    .opts input[type=radio] { accent-color: var(--accent); flex-shrink: 0; }
+    .opts label.correct { border-color: #22c55e; background: rgba(34,197,94,0.08); color: #22c55e; }
+    .opts label.wrong   { border-color: #ef4444; background: rgba(239,68,68,0.08);  color: #ef4444; }
+
+    .quiz-submit {
+      display: block; width: 100%;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 1rem; margin-top: 0.5rem;
+      background: transparent; border: 1px solid var(--accent);
+      color: var(--accent); border-radius: var(--radius);
+      transition: all var(--transition); cursor: none;
+    }
+    .quiz-submit:hover { background: var(--accent); color: var(--bg-deep); box-shadow: 0 0 25px rgba(0,229,255,0.35); }
+    .quiz-submit:disabled { opacity: 0.35; cursor: default; pointer-events: none; }
+
+    /* result */
+    .result-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-2);
+      border-top: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 3rem 2.5rem;
+      text-align: center;
+      display: none;
+      margin-top: 1.5rem;
+    }
+    .result-score {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 7rem; line-height: 1;
+      letter-spacing: 0.05em;
+      background: linear-gradient(135deg, var(--blue-3), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(0,229,255,0.3));
+    }
+    .result-rank {
+      font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--text-muted); margin: 0.5rem 0 1rem;
+    }
+    .result-msg { font-size: 1.1rem; color: var(--text-mid); margin-bottom: 2rem; font-weight: 300; }
+    .result-details {
+      text-align: left; border-top: 1px solid var(--border);
+      padding-top: 1.5rem; margin-bottom: 2rem;
+    }
+    .detail-item {
+      font-size: 0.85rem; color: var(--text-muted);
+      padding: 0.65rem 0; border-bottom: 1px solid var(--border);
+      line-height: 1.6;
+    }
+    .detail-item:last-child { border-bottom: none; }
+    .ok { color: #22c55e; font-weight: 700; }
+    .no { color: #ef4444; font-weight: 700; }
+    .result-actions { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+  </style>
+</head>
+<body>
+<div id="ps-bg">
+  <div class="ps-wave"></div><div class="ps-wave"></div>
+  <div class="ps-wave"></div><div class="ps-wave"></div>
+</div>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<button id="back-top" aria-label="Volver arriba">↑</button>
+
+<div id="page-wrap">
+<nav>
+  <a class="nav-logo" href="index.html">GAME ICONS</a>
+  <ul class="nav-links">
+    <li><a href="index.html"            data-es="Inicio"     data-en="Home">Inicio</a></li>
+    <li><a href="index.html#personajes" data-es="Personajes" data-en="Characters">Personajes</a></li>
+    <li><a href="quiz.html" class="active" data-es="Evaluación" data-en="Quiz">Evaluación</a></li>
+  </ul>
+  <div class="nav-symbols">
+    <div class="ps-sym ps-sym-x">✕</div><div class="ps-sym ps-sym-o">○</div>
+    <div class="ps-sym ps-sym-sq">□</div><div class="ps-sym ps-sym-tri">△</div>
+  </div>
+  <button id="lang-btn">EN</button>
+</nav>
+
+<div class="quiz-hero">
+  <div class="ps-quiz-symbols">
+    <div class="psq psq-x">✕</div>
+    <div class="psq psq-o">○</div>
+    <div class="psq psq-sq">□</div>
+    <div class="psq psq-tr">△</div>
+  </div>
+  <span class="eyebrow" data-es="Evaluación Final" data-en="Final Quiz">Evaluación Final</span>
+  <h1 data-es="¿Cuánto sabes de los íconos gamer?" data-en="How much do you know about gamer icons?">¿Cuánto sabes de los íconos gamer?</h1>
+  <p style="margin-top:1rem;" data-es="Demuestra tu conocimiento respondiendo estas 5 preguntas sobre los personajes más legendarios de la historia de los videojuegos." data-en="Demonstrate your knowledge by answering these 5 questions about the most legendary characters in video game history.">Demuestra tu conocimiento respondiendo estas 5 preguntas sobre los personajes más legendarios de la historia de los videojuegos.</p>
+</div>
+
+<div class="quiz-wrap">
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span data-es="Progreso" data-en="Progress">Progreso</span>
+      <span id="prog-label">0 / 5</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+  </div>
+
+  <div id="quiz-form">
+
+    <div class="quiz-q" id="q1-box">
+      <div class="q-head">
+        <div class="q-num">1</div>
+        <div class="q-char" data-es="SOBRE MARIO" data-en="ABOUT MARIO">SOBRE MARIO</div>
+      </div>
+      <p class="q-text" data-es="¿Con qué nombre apareció Mario por primera vez en un videojuego arcade en 1981?" data-en="By what name did Mario first appear in an arcade video game in 1981?">¿Con qué nombre apareció Mario por primera vez en un videojuego arcade en 1981?</p>
+      <div class="opts">
+        <label><input type="radio" name="q1" value="a"/> <span data-es="Super Mario" data-en="Super Mario">Super Mario</span></label>
+        <label><input type="radio" name="q1" value="b"/> <span data-es="Jumpman" data-en="Jumpman">Jumpman</span></label>
+        <label><input type="radio" name="q1" value="c"/> <span data-es="Plumber Man" data-en="Plumber Man">Plumber Man</span></label>
+        <label><input type="radio" name="q1" value="d"/> <span data-es="Mario Bros" data-en="Mario Bros">Mario Bros</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-q" id="q2-box">
+      <div class="q-head">
+        <div class="q-num">2</div>
+        <div class="q-char" data-es="SOBRE LINK" data-en="ABOUT LINK">SOBRE LINK</div>
+      </div>
+      <p class="q-text" data-es="¿Qué juego de Link obtuvo 99/100 en Metacritic y es considerado el mejor videojuego de todos los tiempos?" data-en="Which Link game scored 99/100 on Metacritic and is considered the greatest video game of all time?">¿Qué juego de Link obtuvo 99/100 en Metacritic y es considerado el mejor videojuego de todos los tiempos?</p>
+      <div class="opts">
+        <label><input type="radio" name="q2" value="a"/> <span>The Wind Waker</span></label>
+        <label><input type="radio" name="q2" value="b"/> <span>A Link to the Past</span></label>
+        <label><input type="radio" name="q2" value="c"/> <span>Ocarina of Time</span></label>
+        <label><input type="radio" name="q2" value="d"/> <span>Breath of the Wild</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-q" id="q3-box">
+      <div class="q-head">
+        <div class="q-num">3</div>
+        <div class="q-char" data-es="SOBRE SONIC" data-en="ABOUT SONIC">SOBRE SONIC</div>
+      </div>
+      <p class="q-text" data-es="¿Quiénes fueron los diseñadores originales de Sonic the Hedgehog en SEGA?" data-en="Who were the original designers of Sonic the Hedgehog at SEGA?">¿Quiénes fueron los diseñadores originales de Sonic the Hedgehog en SEGA?</p>
+      <div class="opts">
+        <label><input type="radio" name="q3" value="a"/> <span>Hideo Kojima & Shigeru Miyamoto</span></label>
+        <label><input type="radio" name="q3" value="b"/> <span data-es="Yuji Naka & Naoto Ohshima" data-en="Yuji Naka & Naoto Ohshima">Yuji Naka & Naoto Ohshima</span></label>
+        <label><input type="radio" name="q3" value="c"/> <span>Yu Suzuki & Toshihiro Nagoshi</span></label>
+        <label><input type="radio" name="q3" value="d"/> <span>Hironobu Sakaguchi & Nobuo Uematsu</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-q" id="q4-box">
+      <div class="q-head">
+        <div class="q-num">4</div>
+        <div class="q-char" data-es="SOBRE LARA CROFT" data-en="ABOUT LARA CROFT">SOBRE LARA CROFT</div>
+      </div>
+      <p class="q-text" data-es="¿Qué distinción histórica obtuvo Lara Croft en el Libro Guinness de los Récords?" data-en="What historic distinction did Lara Croft earn in the Guinness Book of World Records?">¿Qué distinción histórica obtuvo Lara Croft en el Libro Guinness de los Récords?</p>
+      <div class="opts">
+        <label><input type="radio" name="q4" value="a"/> <span data-es="Personaje de videojuego más vendido de todos los tiempos" data-en="Best-selling video game character of all time">Personaje de videojuego más vendido de todos los tiempos</span></label>
+        <label><input type="radio" name="q4" value="b"/> <span data-es="Heroína virtual más exitosa de la historia del entretenimiento" data-en="Most successful virtual heroine in entertainment history">Heroína virtual más exitosa de la historia del entretenimiento</span></label>
+        <label><input type="radio" name="q4" value="c"/> <span data-es="Primer personaje femenino en un videojuego en 3D" data-en="First female character in a 3D video game">Primer personaje femenino en un videojuego en 3D</span></label>
+        <label><input type="radio" name="q4" value="d"/> <span data-es="Mejor diseño de personaje de la historia" data-en="Best character design in history">Mejor diseño de personaje de la historia</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-q" id="q5-box">
+      <div class="q-head">
+        <div class="q-num">5</div>
+        <div class="q-char" data-es="SOBRE MASTER CHIEF" data-en="ABOUT MASTER CHIEF">SOBRE MASTER CHIEF</div>
+      </div>
+      <p class="q-text" data-es="¿Cuál es el número de identificación real del Master Chief dentro del programa SPARTAN-II?" data-en="What is Master Chief's real identification number within the SPARTAN-II program?">¿Cuál es el número de identificación real del Master Chief dentro del programa SPARTAN-II?</p>
+      <div class="opts">
+        <label><input type="radio" name="q5" value="a"/> <span>John-001</span></label>
+        <label><input type="radio" name="q5" value="b"/> <span>John-117</span></label>
+        <label><input type="radio" name="q5" value="c"/> <span>John-343</span></label>
+        <label><input type="radio" name="q5" value="d"/> <span>John-007</span></label>
+      </div>
+    </div>
+
+    <button class="quiz-submit" id="submit-btn" onclick="submitQuiz()" data-es="ENVIAR RESPUESTAS" data-en="SUBMIT ANSWERS">ENVIAR RESPUESTAS</button>
+  </div>
+
+  <div class="result-box" id="result-box">
+    <div class="result-score" id="result-score"></div>
+    <div class="result-rank" id="result-rank"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="result-details" id="result-details"></div>
+    <div class="result-actions">
+      <button class="btn btn-ghost" onclick="resetQuiz()" data-es="INTENTAR DE NUEVO" data-en="TRY AGAIN">INTENTAR DE NUEVO</button>
+      <a href="index.html#personajes" class="btn" data-es="VER PERSONAJES" data-en="SEE CHARACTERS">VER PERSONAJES</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">GAME ICONS</div>
+      <p class="footer-desc" data-es="Proyecto académico · Bogotá, Colombia · 2025" data-en="Academic project · Bogotá, Colombia · 2025">Proyecto académico · Bogotá, Colombia · 2025</p>
+    </div>
+    <ul class="footer-nav">
+      <li><a href="index.html" data-es="Inicio" data-en="Home">Inicio</a></li>
+      <li><a href="mario.html">Mario</a></li><li><a href="link.html">Link</a></li>
+      <li><a href="sonic.html">Sonic</a></li><li><a href="lara.html">Lara Croft</a></li>
+      <li><a href="master.html">Master Chief</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 · Proyecto Académico · Bogotá, Colombia</span>
+    <span>HTML · CSS · JavaScript · GitHub Pages</span>
+  </div>
+</footer>
+</div>
+
+<script src="global.js"></script>
+<script>
+const answers = {q1:'b',q2:'c',q3:'b',q4:'b',q5:'b'};
+const data = {
+  es: {
+    explain: {
+      q1:'Mario apareció por primera vez como "Jumpman" en el arcade Donkey Kong (1981), creado por Shigeru Miyamoto.',
+      q2:'Ocarina of Time (1998) obtuvo 99/100 en Metacritic y es considerado universalmente el mejor videojuego de la historia.',
+      q3:'Sonic fue diseñado por Yuji Naka (programador) y Naoto Ohshima (diseñador visual) en SEGA en 1991.',
+      q4:'Lara Croft fue reconocida por el Guinness como la heroína virtual más exitosa de la historia del entretenimiento.',
+      q5:'El nombre completo del Master Chief es John-117, el Spartan número 117 del programa SPARTAN-II.'
+    },
+    ranks: ['NOVATO','APRENDIZ','JUGADOR','EXPERTO','LEYENDA GAMER'],
+    msgs: [
+      '¡Vuelve a explorar los perfiles de cada personaje!',
+      'Buen comienzo — hay mucho más por aprender.',
+      '¡Vas bien! Ya conoces varios íconos del gaming.',
+      '¡Excelente! Eres un gran conocedor de la historia gamer.',
+      '¡Perfecto! Dominas completamente la historia de los videojuegos.'
+    ]
+  },
+  en: {
+    explain: {
+      q1:'Mario first appeared as "Jumpman" in the Donkey Kong arcade (1981), created by Shigeru Miyamoto.',
+      q2:'Ocarina of Time (1998) scored 99/100 on Metacritic and is universally considered the greatest video game ever made.',
+      q3:'Sonic was designed by Yuji Naka (programmer) and Naoto Ohshima (visual designer) at SEGA in 1991.',
+      q4:'Lara Croft was recognized by Guinness as the most successful virtual heroine in entertainment history.',
+      q5:'Master Chief\'s full name is John-117, Spartan number 117 of the SPARTAN-II program.'
+    },
+    ranks: ['ROOKIE','APPRENTICE','PLAYER','EXPERT','GAMER LEGEND'],
+    msgs: [
+      'Go back and explore each character\'s profile!',
+      'Good start — there\'s a lot more to learn.',
+      'Getting there! You already know several gaming icons.',
+      'Excellent! You\'re a great gaming history expert.',
+      'Perfect! You completely master video game history.'
+    ]
+  }
+};
+
+let answered = 0;
+
+document.querySelectorAll('input[type=radio]').forEach(r => {
+  r.addEventListener('change', () => {
+    const box = r.closest('.quiz-q');
+    if(!box.classList.contains('answered')){
+      box.classList.add('answered');
+      answered++;
+      const pct = (answered/5)*100;
+      document.getElementById('progress').style.width = pct+'%';
+      document.getElementById('prog-label').textContent = answered+' / 5';
+    }
+  });
+});
+
+function submitQuiz(){
+  const lang = document.documentElement.lang==='en'?'en':'es';
+  const d = data[lang];
+  let score=0; let details='';
+  for(let i=1;i<=5;i++){
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const ok = sel && sel.value===answers[`q${i}`];
+    if(ok) score++;
+    const mark = ok
+      ? `<span class="ok">${lang==='es'?'✓ Correcto':'✓ Correct'}</span>`
+      : `<span class="no">${lang==='es'?'✗ Incorrecto':'✗ Incorrect'}</span>`;
+    details += `<div class="detail-item">${mark} — ${d.explain['q'+i]}</div>`;
+    document.querySelectorAll(`input[name="q${i}"]`).forEach(r=>{
+      const lbl=r.parentElement;
+      if(r.value===answers[`q${i}`]) lbl.classList.add('correct');
+      else if(r.checked) lbl.classList.add('wrong');
+      r.disabled=true;
+    });
+  }
+  document.getElementById('result-score').textContent=score+'/5';
+  document.getElementById('result-rank').textContent=d.ranks[score];
+  document.getElementById('result-msg').textContent=d.msgs[score];
+  document.getElementById('result-details').innerHTML=details;
+  document.getElementById('progress').style.width='100%';
+  document.getElementById('prog-label').textContent='5 / 5';
+  document.getElementById('submit-btn').disabled=true;
+  const rb=document.getElementById('result-box');
+  rb.style.display='block';
+  setTimeout(()=>rb.scrollIntoView({behavior:'smooth',block:'start'}),100);
+}
+
+function resetQuiz(){
+  document.querySelectorAll('input[type=radio]').forEach(r=>{
+    r.checked=false; r.disabled=false;
+    r.parentElement.classList.remove('correct','wrong');
+  });
+  document.querySelectorAll('.quiz-q').forEach(q=>q.classList.remove('answered'));
+  document.getElementById('result-box').style.display='none';
+  document.getElementById('submit-btn').disabled=false;
+  document.getElementById('progress').style.width='0%';
+  document.getElementById('prog-label').textContent='0 / 5';
+  answered=0;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lara Croft — Íconos de los Videojuegos</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    :root { --char-color:#a78bfa; --char-color2:#ec4899; --char-glow:rgba(167,139,250,0.2); }
+    body { background: radial-gradient(ellipse at 75% 0%, rgba(167,139,250,0.08) 0%, transparent 55%), var(--bg); }
+
+    .char-hero {
+      min-height: 90vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+    }
+    @media(max-width:768px){ .char-hero { grid-template-columns:1fr; min-height:auto; } }
+
+    .char-hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 4rem 3rem 4rem 2.5rem;
+      position: relative; z-index: 2;
+    }
+    @media(max-width:768px){ .char-hero-left { padding: 2.5rem 1.5rem; order:2; } }
+
+    .char-hero-right {
+      position: relative; overflow: hidden;
+    }
+    .char-hero-right img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      display: block;
+      mask-image: linear-gradient(to left, black 50%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to left, black 50%, transparent 100%);
+    }
+    @media(max-width:768px){
+      .char-hero-right { height: 320px; order:1; }
+      .char-hero-right img { mask-image: linear-gradient(to bottom, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%); }
+    }
+    .char-hero-right::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 30%, rgba(167,139,250,0.15) 0%, transparent 60%);
+    }
+
+    .char-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.75rem; letter-spacing: 0.5em;
+      color: var(--char-color); opacity: 0.6;
+      margin-bottom: 0.75rem;
+    }
+    .char-name-display {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      letter-spacing: 0.04em; line-height: 0.88;
+      color: var(--text);
+      text-shadow: 0 0 40px var(--char-glow);
+      margin-bottom: 0.5rem;
+      animation: fadeUp 0.9s ease both;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    .char-franchise {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 0.8rem; font-weight: 400;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1.5rem;
+    }
+    .char-tags-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom: 2rem; }
+    .ctag {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.28rem 0.75rem;
+      border: 1px solid var(--char-color);
+      color: var(--char-color);
+      background: rgba(167,139,250,0.08);
+      border-radius: 2px;
+    }
+    .char-tagline {
+      font-size: 1.05rem; font-weight: 300;
+      color: var(--text-mid); line-height: 1.7;
+      margin-bottom: 2rem; font-style: italic;
+      border-left: 2px solid var(--char-color);
+      padding-left: 1rem;
+    }
+    .hero-nav-btns { display:flex; gap:0.75rem; flex-wrap:wrap; }
+
+    /* FACTS BAR */
+    .facts-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative; z-index: 2;
+    }
+    @media(max-width:600px){ .facts-bar { grid-template-columns: 1fr 1fr; } }
+    .fact-cell {
+      padding: 1.6rem 1.5rem;
+      border-right: 1px solid var(--border);
+      background: var(--bg-card);
+      transition: background var(--transition);
+    }
+    .fact-cell:last-child { border-right: none; }
+    .fact-cell:hover { background: var(--bg-hover); }
+    .fact-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; letter-spacing: 0.06em;
+      color: var(--char-color);
+      text-shadow: 0 0 18px var(--char-glow);
+      line-height: 1;
+    }
+    .fact-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem; line-height: 1.4; }
+
+    /* BIO */
+    .bio-section { background: linear-gradient(180deg, var(--bg) 0%, var(--bg-mid) 50%, var(--bg) 100%); }
+    .bio-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 4rem; align-items: start;
+    }
+    @media(max-width:900px){ .bio-grid { grid-template-columns:1fr; gap:2.5rem; } }
+    .bio-body p + p { margin-top: 1.1rem; }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--char-color);
+      padding: 1.8rem;
+      border-radius: var(--radius);
+      position: sticky; top: calc(var(--nav-h) + 1rem);
+    }
+    .info-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem; letter-spacing: 0.1em;
+      color: var(--char-color); margin-bottom: 1.2rem;
+    }
+    .info-row {
+      display: flex; justify-content: space-between; align-items: start;
+      padding: 0.7rem 0; border-bottom: 1px solid var(--border);
+      gap: 1rem; font-size: 0.88rem;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-row .ik { color: var(--text-muted); font-weight: 400; flex-shrink: 0; }
+    .info-row .iv { color: var(--text); font-weight: 600; text-align: right; }
+
+    /* IMPACT */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem; margin-top: 2rem;
+    }
+    .impact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .impact-card:hover { border-color: var(--char-color); transform: translateY(-3px); }
+    .impact-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+    .impact-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem; letter-spacing: 0.08em;
+      color: var(--char-color); margin-bottom: 0.5rem;
+    }
+    .impact-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* CHAR NAV */
+    .char-nav-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 0; flex-wrap: wrap; gap: 1rem;
+    }
+    .char-nav-bar a {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-muted); padding: 0.55rem 1.2rem;
+      border: 1px solid var(--border); border-radius: var(--radius);
+      transition: all var(--transition);
+    }
+    .char-nav-bar a:hover { color: var(--char-color); border-color: var(--char-color); background: rgba(167,139,250,0.06); }
+  </style>
+</head>
+<body>
+<div id="ps-bg">
+  <div class="ps-wave"></div><div class="ps-wave"></div>
+  <div class="ps-wave"></div><div class="ps-wave"></div>
+</div>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<button id="back-top" aria-label="Volver arriba">↑</button>
+
+<div id="page-wrap">
+<nav>
+  <a class="nav-logo" href="index.html">GAME ICONS</a>
+  <ul class="nav-links">
+    <li><a href="index.html"          data-es="Inicio"     data-en="Home">Inicio</a></li>
+    <li><a href="index.html#personajes" data-es="Personajes" data-en="Characters">Personajes</a></li>
+    <li><a href="quiz.html"           data-es="Evaluación" data-en="Quiz">Evaluación</a></li>
+  </ul>
+  <div class="nav-symbols">
+    <div class="ps-sym ps-sym-x">✕</div><div class="ps-sym ps-sym-o">○</div>
+    <div class="ps-sym ps-sym-sq">□</div><div class="ps-sym ps-sym-tri">△</div>
+  </div>
+  <button id="lang-btn">EN</button>
+</nav>
+
+<!-- HERO -->
+<section class="char-hero">
+  <div class="char-hero-left">
+    <div class="char-number" data-es="PERSONAJE 04 / 05 — ÍCONO DEL GAMING" data-en="CHARACTER 04 / 05 — GAMING ICON">PERSONAJE 04 / 05 — ÍCONO DEL GAMING</div>
+    <h1 class="char-name-display">Lara Croft</h1>
+    <div class="char-franchise" data-es="Tomb Raider · Eidos Interactive · Desde 1996" data-en="Tomb Raider · Eidos Interactive · Since 1996">Tomb Raider · Eidos Interactive · Desde 1996</div>
+    <div class="char-tags-row"><span class="ctag" data-es="ACCIÓN-AVENTURA" data-en="ACTION-ADVENTURE">ACCIÓN-AVENTURA</span><span class="ctag" data-es="PIONERA" data-en="PIONEER">PIONERA</span><span class="ctag" data-es="ÍCONO CULTURAL" data-en="CULTURAL ICON">ÍCONO CULTURAL</span><span class="ctag" data-es="ARQUEÓLOGA" data-en="ARCHAEOLOGIST">ARQUEÓLOGA</span><span class="ctag" data-es="1996" data-en="1996">1996</span></div>
+    <p class="char-tagline" data-es=""La arqueóloga que cambió para siempre cómo el mundo ve a las protagonistas de los videojuegos."" data-en=""The archaeologist who forever changed how the world sees video game protagonists."">"La arqueóloga que cambió para siempre cómo el mundo ve a las protagonistas de los videojuegos."</p>
+    <div class="hero-nav-btns">
+      <a href="index.html#personajes" class="btn btn-ghost" data-es="← Todos los personajes" data-en="← All characters">← Todos los personajes</a>
+      <a href="quiz.html" class="btn" data-es="Ir a la evaluación" data-en="Go to quiz">Ir a la evaluación</a>
+    </div>
+  </div>
+  <div class="char-hero-right">
+    <img src="lara.jpg" alt="Lara Croft" loading="lazy"/>
+  </div>
+</section>
+
+<!-- FACTS -->
+<div class="facts-bar">
+  <div class="fact-cell"><div class="fact-num">1996</div><div class="fact-label" data-es="lanzamiento de Tomb Raider" data-en="Tomb Raider release year">lanzamiento de Tomb Raider</div></div><div class="fact-cell"><div class="fact-num">Guinness</div><div class="fact-label" data-es="heroína virtual más exitosa" data-en="most successful virtual heroine">heroína virtual más exitosa</div></div><div class="fact-cell"><div class="fact-num">+58M</div><div class="fact-label" data-es="copias vendidas en la saga" data-en="copies sold in the saga">copias vendidas en la saga</div></div><div class="fact-cell"><div class="fact-num">2</div><div class="fact-label" data-es="películas con Angelina Jolie" data-en="movies with Angelina Jolie">películas con Angelina Jolie</div></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- BIO -->
+<section class="bio-section">
+<div class="wrap">
+  <div class="bio-grid">
+    <div class="bio-body reveal">
+      <span class="eyebrow" data-es="Biografía completa" data-en="Full biography">Biografía completa</span>
+      <h2 class="section-title" data-es="Historia e impacto" data-en="History & impact">Historia e impacto</h2>
+      <div data-es="<p class="body-text">Lara Croft es mucho más que un personaje de videojuego: es un verdadero <strong>ícono cultural</strong> que transformó de raíz la industria del entretenimiento digital al demostrar, de forma contundente, que una protagonista femenina podía ser tan poderosa, compleja, carismática e inspiradora como cualquier héroe masculino. Creada por el equipo de <strong>Core Design</strong> (liderado por Toby Gard) y lanzada en 1996 para PlayStation y PC, Lara es una arqueóloga británica proveniente de una familia aristocrática que decide abandonar sus privilegios para explorar tumbas antiguas, resolver acertijos complejos y enfrentarse a enemigos en los rincones más remotos y peligrosos del planeta.</p>
+<p class="body-text">Su primer juego fue una revolución absoluta en múltiples frentes: estableció nuevos estándares para la <strong>acción en tercera persona</strong>, introdujo la narrativa cinematográfica en los videojuegos de acción, y demostró que los entornos 3D podían ser espacios de exploración profunda y satisfactoria. El juego vendió más de 7 millones de copias en su primera entrega y lanzó una franquicia que se extendería durante décadas.</p>
+<p class="body-text">Lara Croft se convirtió en el <strong>primer personaje de videojuego</strong> en aparecer en la portada de revistas de moda internacionales como Elle y la revista TIME. Fue incluida en el <strong>Libro Guinness de los Récords</strong> como la heroína virtual más exitosa de la historia del entretenimiento. Su imagen traspasó completamente los límites del mundo gamer para instalarse en la cultura popular global.</p>
+<p class="body-text">Dos películas protagonizadas por <strong>Angelina Jolie</strong> (2001, 2003) y una trilogía reimaginada en el siglo XXI con <strong>Alicia Vikander</strong> (2018) confirman su estatus de ícono atemporal. Hoy, Lara Croft sigue siendo un símbolo de fortaleza, inteligencia e independencia, y su influencia se siente en cada protagonista femenina de videojuego que vino después de ella.</p>" data-en="<p class="body-text">Lara Croft is much more than a video game character: she is a true <strong>cultural icon</strong> who fundamentally transformed the digital entertainment industry by demonstrating, conclusively, that a female protagonist could be as powerful, complex, charismatic, and inspiring as any male hero. Created by the <strong>Core Design</strong> team (led by Toby Gard) and released in 1996 for PlayStation and PC, Lara is a British archaeologist from an aristocratic family who decides to abandon her privileges to explore ancient tombs, solve complex puzzles, and confront enemies in the most remote and dangerous corners of the planet.</p>
+<p class="body-text">Her first game was an absolute revolution on multiple fronts: it established new standards for <strong>third-person action</strong>, introduced cinematic storytelling into action video games, and proved that 3D environments could be spaces of deep and satisfying exploration. The game sold over 7 million copies in its first installment and launched a franchise that would extend for decades.</p>
+<p class="body-text">Lara Croft became the <strong>first video game character</strong> to appear on the cover of international fashion magazines such as Elle and TIME magazine. She was included in the <strong>Guinness Book of World Records</strong> as the most successful virtual heroine in entertainment history. Her image completely transcended the boundaries of the gaming world to establish itself in global popular culture.</p>
+<p class="body-text">Two films starring <strong>Angelina Jolie</strong> (2001, 2003) and a reimagined trilogy with <strong>Alicia Vikander</strong> (2018) confirm her timeless icon status. Today, Lara Croft remains a symbol of strength, intelligence, and independence, and her influence is felt in every female video game protagonist who came after her.</p>"><p class="body-text">Lara Croft es mucho más que un personaje de videojuego: es un verdadero <strong>ícono cultural</strong> que transformó de raíz la industria del entretenimiento digital al demostrar, de forma contundente, que una protagonista femenina podía ser tan poderosa, compleja, carismática e inspiradora como cualquier héroe masculino. Creada por el equipo de <strong>Core Design</strong> (liderado por Toby Gard) y lanzada en 1996 para PlayStation y PC, Lara es una arqueóloga británica proveniente de una familia aristocrática que decide abandonar sus privilegios para explorar tumbas antiguas, resolver acertijos complejos y enfrentarse a enemigos en los rincones más remotos y peligrosos del planeta.</p>
+<p class="body-text">Su primer juego fue una revolución absoluta en múltiples frentes: estableció nuevos estándares para la <strong>acción en tercera persona</strong>, introdujo la narrativa cinematográfica en los videojuegos de acción, y demostró que los entornos 3D podían ser espacios de exploración profunda y satisfactoria. El juego vendió más de 7 millones de copias en su primera entrega y lanzó una franquicia que se extendería durante décadas.</p>
+<p class="body-text">Lara Croft se convirtió en el <strong>primer personaje de videojuego</strong> en aparecer en la portada de revistas de moda internacionales como Elle y la revista TIME. Fue incluida en el <strong>Libro Guinness de los Récords</strong> como la heroína virtual más exitosa de la historia del entretenimiento. Su imagen traspasó completamente los límites del mundo gamer para instalarse en la cultura popular global.</p>
+<p class="body-text">Dos películas protagonizadas por <strong>Angelina Jolie</strong> (2001, 2003) y una trilogía reimaginada en el siglo XXI con <strong>Alicia Vikander</strong> (2018) confirman su estatus de ícono atemporal. Hoy, Lara Croft sigue siendo un símbolo de fortaleza, inteligencia e independencia, y su influencia se siente en cada protagonista femenina de videojuego que vino después de ella.</p></div>
+    </div>
+    <div class="reveal delay-2">
+      <div class="info-card">
+        <h3 data-es="Ficha del personaje" data-en="Character profile">Ficha del personaje</h3>
+        <div class="info-row"><span class="ik" data-es="Nombre completo" data-en="Full name">Nombre completo</span><span class="iv">Lara Croft</span></div><div class="info-row"><span class="ik" data-es="Debut" data-en="Debut">Debut</span><span class="iv">Tomb Raider (1996)</span></div><div class="info-row"><span class="ik" data-es="Compañía" data-en="Company">Compañía</span><span class="iv">Eidos Interactive / Crystal Dynamics</span></div><div class="info-row"><span class="ik" data-es="Creador" data-en="Creator">Creador</span><span class="iv">Toby Gard</span></div><div class="info-row"><span class="ik" data-es="Profesión" data-en="Profession">Profesión</span><span class="iv">Arqueóloga y aventurera</span></div><div class="info-row"><span class="ik" data-es="Reconocimiento" data-en="Recognition">Reconocimiento</span><span class="iv">Libro Guinness de los Récords</span></div><div class="info-row"><span class="ik" data-es="Ventas" data-en="Sales">Ventas</span><span class="iv">+58 millones de copias</span></div><div class="info-row"><span class="ik" data-es="Películas" data-en="Movies">Películas</span><span class="iv">4 adaptaciones cinematográficas</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- IMPACT -->
+<section class="wrap">
+  <div class="reveal">
+    <span class="eyebrow" data-es="Legado e impacto" data-en="Legacy & impact">Legado e impacto</span>
+    <h2 class="section-title" data-es="¿Por qué es un ícono?" data-en="Why is it an icon?">¿Por qué es un ícono?</h2>
+  </div>
+  <div class="impact-grid"><div class="impact-card reveal">
+      <div class="impact-icon">👑</div>
+      <div class="impact-title" data-es="Primera Heroína Icónica" data-en="First Iconic Heroine">Primera Heroína Icónica</div>
+      <p class="impact-text" data-es="Demostró que una protagonista femenina podía liderar una franquicia de videojuegos de talla mundial, abriendo el camino para todas las que vinieron después." data-en="Proved that a female protagonist could lead a world-class video game franchise, paving the way for all who came after.">Demostró que una protagonista femenina podía liderar una franquicia de videojuegos de talla mundial, abriendo el camino para todas las que vinieron después.</p>
+    </div><div class="impact-card reveal">
+      <div class="impact-icon">📰</div>
+      <div class="impact-title" data-es="Ícono de la Cultura Pop" data-en="Pop Culture Icon">Ícono de la Cultura Pop</div>
+      <p class="impact-text" data-es="Primera protagonista de videojuego en aparecer en portadas de revistas de moda internacionales, trascendiendo completamente el mundo gamer." data-en="First video game protagonist to appear on international fashion magazine covers, completely transcending the gaming world.">Primera protagonista de videojuego en aparecer en portadas de revistas de moda internacionales, trascendiendo completamente el mundo gamer.</p>
+    </div><div class="impact-card reveal">
+      <div class="impact-icon">🎬</div>
+      <div class="impact-title" data-es="Éxito en Hollywood" data-en="Hollywood Success">Éxito en Hollywood</div>
+      <p class="impact-text" data-es="Sus adaptaciones cinematográficas con Angelina Jolie y Alicia Vikander demostraron el potencial de los videojuegos como base para el cine mainstream." data-en="Her film adaptations with Angelina Jolie and Alicia Vikander demonstrated the potential of video games as a basis for mainstream cinema.">Sus adaptaciones cinematográficas con Angelina Jolie y Alicia Vikander demostraron el potencial de los videojuegos como base para el cine mainstream.</p>
+    </div><div class="impact-card reveal">
+      <div class="impact-icon">🏆</div>
+      <div class="impact-title" data-es="Record Guinness" data-en="Guinness Record">Record Guinness</div>
+      <p class="impact-text" data-es="Reconocida oficialmente como la heroína virtual más exitosa de la historia del entretenimiento, un récord que consolidó su lugar en la historia." data-en="Officially recognized as the most successful virtual heroine in entertainment history, a record that cemented her place in history.">Reconocida oficialmente como la heroína virtual más exitosa de la historia del entretenimiento, un récord que consolidó su lugar en la historia.</p>
+    </div></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CHAR NAV -->
+<div class="wrap" style="padding-top:2rem; padding-bottom:2rem;">
+  <div class="char-nav-bar">
+    <a href="sonic.html" data-es="← Sonic" data-en="← Sonic">← Sonic</a>
+    <a href="index.html#personajes" data-es="Ver todos" data-en="See all">Ver todos</a>
+    <a href="master.html" data-es="Master Chief →" data-en="Master Chief →">Master Chief →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">GAME ICONS</div>
+      <p class="footer-desc" data-es="Una experiencia informativa sobre los íconos más legendarios de la historia de los videojuegos. Proyecto académico · Bogotá, Colombia." data-en="An informative experience about the most legendary icons in video game history. Academic project · Bogotá, Colombia.">Una experiencia informativa sobre los íconos más legendarios de la historia de los videojuegos. Proyecto académico · Bogotá, Colombia.</p>
+    </div>
+    <ul class="footer-nav">
+      <li><a href="index.html" data-es="Inicio" data-en="Home">Inicio</a></li>
+      <li><a href="mario.html">Mario</a></li><li><a href="link.html">Link</a></li>
+      <li><a href="sonic.html">Sonic</a></li><li><a href="lara.html">Lara Croft</a></li>
+      <li><a href="master.html">Master Chief</a></li>
+      <li><a href="quiz.html" data-es="Evaluación" data-en="Quiz">Evaluación</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span data-es="© 2025 · Proyecto Académico · Bogotá, Colombia" data-en="© 2025 · Academic Project · Bogotá, Colombia">© 2025 · Proyecto Académico · Bogotá, Colombia</span>
+    <span>HTML · CSS · JavaScript · GitHub Pages</span>
+  </div>
+</footer>
+</div>
+<script src="global.js"></script>
+<script>
+  document.querySelectorAll('.reveal').forEach((el,i)=>{
+    const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}}),{threshold:0.07});
+    obs.observe(el);
+  });
+</script>
+</body></html>
